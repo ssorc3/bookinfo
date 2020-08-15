@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  gateway:
+    build: ./Gateway/
+    ports:
+      - "8080:80"
+
+  details:
+    build: ./Details/
+  reviews:
+    build: ./Reviews/
+  ratings:
+    build: ./Ratings/
+
+  mongo:
+    build: ./MongoDB/
