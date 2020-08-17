@@ -1,0 +1,270 @@
+# Details Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+  labels:
+    app: details
+    service: details
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: details
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-details
+  labels:
+    account: details
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details-v1
+  labels:
+    app: details
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: details
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: details
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+      - name: details
+        image: bcross001.azurecr.io/bookinfo-details
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+# Ratings Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+  labels:
+    app: ratings
+    service: ratings
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: ratings
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings
+  labels:
+    account: ratings
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-v1
+  labels:
+    app: ratings
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratings
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ratings
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-ratings
+      containers:
+      - name: ratings
+        image: bcross001.azurecr.io/bookinfo-ratings
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+# Reviews Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+  labels:
+    app: reviews
+    service: reviews
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: reviews
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-reviews
+  labels:
+    account: reviews
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v1
+  labels:
+    app: reviews
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+      - name: reviews
+        image: bcross001.azurecr.io/bookinfo-reviews:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v2
+  labels:
+    app: reviews
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v2
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+      - name: reviews
+        image: bcross001.azurecr.io/bookinfo-reviews:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+# Gateway service
+apiVersion: v1
+kind: Service
+metadata: 
+  name: graphql-gateway
+  labels:
+    app: graphql-gateway
+    service: graphql-gateway
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: graphql-gateway
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-graphql-gateway
+  labels:
+    account: graphql-gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql-gateway-v1
+  labels:
+    app: graphql-gateway
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graphql-gateway
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: graphql-gateway
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-graphql-gateway
+      containers:
+      - name: graphql-gateway
+        image: bcross001.azurecr.io/bookinfo-graphql-gateway
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+# Mongo
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+    service: mongo
+spec:
+  ports:
+  - port: 27017
+  selector:
+    app: mongo
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-mongo
+  labels:
+    account: mongo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mongo
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-mongo
+      containers:
+      - name: mongo
+        image: bcross001.azurecr.io/bookinfo-mongo
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 27017
